@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
     Dialog,
     DialogClose,
@@ -8,25 +8,37 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import { FaEdit } from "react-icons/fa";
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 
+function EditChapters({ course, index }) {
+    // Ensure Chapters has a default value
+    const Chapters = course?.courseOutput?.chapters || [];
 
-function EditChapters({course, index}) {
+    // Check if course and index are valid
+    if (!course || index === undefined || index < 0 || index >= Chapters.length) {
+        return null; // or return a fallback UI
+    }
 
-    const Chapters=course?.courseOutput?.chapters;
-    
-    const [name,SetName]=useState();
-    const [about,setAbout]=useState();
+    // Safely access the chapter
+    const chapter = Chapters[index] || {};
 
-   
+    const [name, setName] = useState(chapter.ChapterName || '');
+    const [about, setAbout] = useState(chapter.About || '');
+
+    const onUpdateHandler = () => {
+        // Add your update logic here
+        console.log("Updated Chapter:", { name, about });
+    };
 
     return (
         <Dialog>
-            <DialogTrigger> <FaEdit /> </DialogTrigger>
+            <DialogTrigger>
+                <FaEdit />
+            </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Edit Chapters!</DialogTitle>
@@ -34,7 +46,7 @@ function EditChapters({course, index}) {
                         <div className='mt-3'>
                             <label>Course Title</label>
                             <Input
-                                defaultValue={Chapters[index].ChapterName || ''}
+                                defaultValue={chapter.ChapterName || ''}
                                 onChange={(event) => setName(event.target.value)}
                             />
                         </div>
@@ -42,7 +54,7 @@ function EditChapters({course, index}) {
                             <label>Description</label>
                             <Textarea
                                 className="h-52"
-                                defaultValue={Chapters[index].About || ''}
+                                defaultValue={chapter.About || ''}
                                 onChange={(event) => setAbout(event.target.value)}
                             />
                         </div>
@@ -55,8 +67,7 @@ function EditChapters({course, index}) {
                 </DialogFooter>
             </DialogContent>
         </Dialog>
-
-    )
+    );
 }
 
-export default EditChapters
+export default EditChapters;
