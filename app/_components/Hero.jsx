@@ -7,62 +7,77 @@ function Hero() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     const stars = [];
-    const starCount = 20000;
+    const starCount = 20000; // Reduced number of stars for better performance
 
-    // Resize canvas dynamically
+    // Resize canvas function
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
-    resizeCanvas();
 
+    // Initialize canvas and add resize listener
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Create stars with optimized properties
     for (let i = 0; i < starCount; i++) {
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         z: Math.random() * 1000,
-        size: Math.random() * 1.5,
-        speed: Math.random() * 0.5 + 0.2,
+        size: Math.random() * 2.5,
+        speed: Math.random() * 3 + 1,
+        color: `hsl(${Math.random() * 360}, 70%, ${Math.random() * 50 + 50}%)`
       });
     }
 
+    // Animation loop
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Clear canvas with a semi-transparent background to create trail effect
+      ctx.fillStyle = 'rgba(0, 0, 20, 0.2)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      stars.forEach((star) => {
+      // Update and draw stars
+      stars.forEach(star => {
+        // Move star forward
         star.z -= star.speed;
 
+        // Reset star when it passes the viewer
         if (star.z <= 0) {
           star.z = 1000;
           star.x = Math.random() * canvas.width;
           star.y = Math.random() * canvas.height;
         }
 
+        // Create perspective effect
         const scale = 1000 / star.z;
         const x = (star.x - canvas.width / 2) * scale + canvas.width / 2;
         const y = (star.y - canvas.height / 2) * scale + canvas.height / 2;
 
-        const sizeFactor = Math.max(0.1, 1 - star.z / 1000);
-        const size = star.size * sizeFactor * 2;
+        // Adjust star size based on depth
+        const size = star.size * (1 - star.z / 1000);
 
-        const brightness = Math.floor(150 + 105 * sizeFactor);
-        ctx.fillStyle = `rgba(100, 180, ${brightness}, ${sizeFactor + 0.2})`;
+        // Draw star
         ctx.beginPath();
+        ctx.fillStyle = star.color;
+        ctx.globalAlpha = 1 - star.z / 1000; // Fade stars in the distance
         ctx.arc(x, y, size, 0, Math.PI * 2);
         ctx.fill();
       });
 
+      // Continue animation
       requestAnimationFrame(animate);
     };
 
-    animate();
+    // Start animation
+    const animationFrameId = requestAnimationFrame(animate);
 
-    window.addEventListener("resize", resizeCanvas);
-
+    // Cleanup function
     return () => {
-      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener('resize', resizeCanvas);
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
