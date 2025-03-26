@@ -1,4 +1,4 @@
-import { Inter, Roboto_Mono } from "@next/font/google";
+import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
