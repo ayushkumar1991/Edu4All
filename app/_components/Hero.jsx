@@ -166,7 +166,7 @@ function Hero() {
         }
       `}</style>
     </div>
-  );
+  )
 }
 
 export default Hero;

@@ -162,7 +162,7 @@ function Header() {
       {/* Spacer for header height */}
       <div className={`w-full ${mobileMenuOpen ? "h-0" : ""}`} />
     </>
-  );
+  )
 }
 
 export default Header;
