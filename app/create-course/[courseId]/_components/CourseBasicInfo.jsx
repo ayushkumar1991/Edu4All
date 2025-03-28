@@ -262,7 +262,7 @@ function CourseBasicInfo({ course, refreshData,edit=true }) {
                                 className="relative w-full h-[320px] rounded-2xl overflow-hidden shadow-lg group"
                             >
                                 <Image
-                                    src={selectedFile || '/Book1.jpg'}
+                                    src='/Book.jpg'
                                     alt="Course cover"
                                     fill
                                     className="object-cover transition-transform duration-700 group-hover:scale-105"

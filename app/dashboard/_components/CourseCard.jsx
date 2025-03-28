@@ -50,7 +50,7 @@ function CourseCard({ course, onDeleteCourse, displayUser = false }) {
         <div className="relative">
           <div className="relative h-56 overflow-hidden">
             <Image
-              src={course?.courseBanner || '/default-banner.jpg'}
+              src="/Book.jpg"
               alt={course?.courseOutput?.["Course Name"] || "Course Banner"}
               width={400}
               height={200}
