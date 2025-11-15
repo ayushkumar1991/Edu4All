@@ -151,7 +151,7 @@ git push origin feature/AmazingFeature
 ## 📞 Contact & Support
 
 👤 Ayush Kumar  
-💼 [LinkedIn](https://www.linkedin.com/in/ayushkumar)  
+💼 [LinkedIn](https://www.linkedin.com/in/ayush-kumar-607444242/)  
 🐱 [GitHub](https://github.com/ayushkumar1991)  
 
 ---
